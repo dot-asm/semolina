@@ -12,7 +12,7 @@ on:
     - master
 
 jobs:
-  rust-n-go:
+  cargo-test:
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -48,6 +48,14 @@ jobs:
         rustc --version --verbose
         export CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse
         cargo test --release
+        elif [ $RUNNER_OS = "macOS" ]; then
+            echo '--- build aarch64-apple-ios'
+            echo
+            rustup target add aarch64-apple-ios
+            env IPHONEOS_DEPLOYMENT_TARGET=10.0 \
+                cargo test --no-run --release --target=aarch64-apple-ios
+            cargo clean -p blst --release --target=aarch64-apple-ios
+        fi
         echo
         echo '--- cargo clippy'
         echo
