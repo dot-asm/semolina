@@ -48,7 +48,7 @@ jobs:
         rustc --version --verbose
         export CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse
         cargo test --release
-        elif [ $RUNNER_OS = "macOS" ]; then
+        if [ $RUNNER_OS = "macOS" ]; then
             echo '--- build aarch64-apple-ios'
             echo
             rustup target add aarch64-apple-ios
